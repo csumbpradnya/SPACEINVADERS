@@ -10,12 +10,12 @@ PrefabInstance:
     - target: {fileID: 5948996942061377388, guid: c3b77266ea0668e4289e92aa866a25ed,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5948996942061377388, guid: c3b77266ea0668e4289e92aa866a25ed,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5948996942061377388, guid: c3b77266ea0668e4289e92aa866a25ed,
         type: 3}
@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 7483517710255911465, guid: c3b77266ea0668e4289e92aa866a25ed,
         type: 3}
       propertyPath: m_TagString
-      value: enemy1
+      value: enemy2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3b77266ea0668e4289e92aa866a25ed, type: 3}

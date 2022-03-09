@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         }
         else if (body.gameObject.tag == "enemy")
         {
-            body.velocity = Vector2.down * 8f;
+            body.velocity = Vector2.down * 2f;
         }
 
         Debug.Log("Wwweeeeee");

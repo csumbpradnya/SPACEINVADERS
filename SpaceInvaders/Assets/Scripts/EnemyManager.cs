@@ -60,12 +60,7 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         enemyAlive = 0;
-        
-        foreach (Transform enemyTransform in enemyRoot)
-        {
-            enemyAlive = enemyAlive + 1;
-        }
-        
+
         timeSinceLastStep += Time.deltaTime;
         timeSinceLastShot += Time.deltaTime;
 
@@ -77,6 +72,7 @@ public class EnemyManager : MonoBehaviour
             float horizontalExtent = Camera.main.orthographicSize * Camera.main.aspect - widthPerEnemy;
             foreach (Transform enemyTransform in enemyRoot)
             {
+                enemyAlive = enemyAlive + 1;
                 if (Mathf.Abs(enemyTransform.position.x) > horizontalExtent)
                 {
                     enemyRoot.position += Vector3.down * heightPerEnemy;

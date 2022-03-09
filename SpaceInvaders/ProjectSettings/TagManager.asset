@@ -17,6 +17,9 @@ TagManager:
   - enemy1
   - friendly
   - enemy
+  - enemy2
+  - enemy3
+  - enemy4
   layers:
   - Default
   - TransparentFX

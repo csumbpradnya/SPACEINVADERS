@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     [FormerlySerializedAs("shottingOffset")] public Transform shootOffsetTransform;
 
     private Animator playerAnimator;
-    private static readonly int Shoot = Animator.StringToHash("Shoot");
     private Rigidbody2D body;
 
     //-----------------------------------------------------------------------------
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // todo - trigger a "shoot" on the animator
-            playerAnimator.SetTrigger(Shoot);
+            playerAnimator.SetTrigger("Shoot");
             GameObject bullet = Instantiate(bulletPrefab, shootOffsetTransform.position, Quaternion.identity);
             bullet.tag = "friendly";
             Debug.Log("Bang!");

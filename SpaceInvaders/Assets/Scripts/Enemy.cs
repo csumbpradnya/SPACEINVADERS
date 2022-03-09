@@ -3,22 +3,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public delegate void EnemyDestroyed(Enemy enemy);
-    public event EnemyDestroyed OnEnemyDestroyed;
-
-    public int pointValue = 50;
-    
-    private int enemyHealth = 80;
+    private int enemyHealth = 100;
     private Rigidbody2D enemy;
-
-    private ScoreManager sm;
-    
-    
+    private ScoreManager scoreManager;
     
     private void Start()
     {
         enemy = GetComponent<Rigidbody2D>(); 
-        sm = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
+        scoreManager = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
     }
 
     //-----------------------------------------------------------------------------
@@ -28,8 +20,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "friendly")
         {
             Destroy(collision.gameObject); // destroy bullet
-
-
             if (enemyHealth > 20)
             {
                 enemyHealth = enemyHealth - 20;
@@ -38,22 +28,23 @@ public class Enemy : MonoBehaviour
             {
                 if (enemy.gameObject.tag == "enemy1")
                 {
-                    sm.scoreIncEnemy1();
+                    scoreManager.scoreEnemy1();
                 }
                 else if (enemy.gameObject.tag == "enemy2")
                 {
-                    sm.scoreIncEnemy2();
+                    scoreManager.scoreEnemy2();
                 }
                 else if (enemy.gameObject.tag == "enemy3")
                 {
-                    sm.scoreIncEnemy3();
+                    scoreManager.scoreEnemy3();
                 }
-
-                sm.setScore();
+                else if (enemy.gameObject.tag == "enemy4")
+                {
+                    scoreManager.scoreEnemy4();
+                }
+                scoreManager.HighScore();
                 Destroy(enemy.gameObject);
             }
-            
-
             Debug.Log("Ouch!");
         }
     }

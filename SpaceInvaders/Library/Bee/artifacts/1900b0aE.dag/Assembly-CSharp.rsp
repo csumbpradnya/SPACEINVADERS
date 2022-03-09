@@ -347,6 +347,7 @@
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/Bunkers.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/Enemy4.cs"
 "Assets/Scripts/EnemyManager.cs"
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/ScoreManager.cs"

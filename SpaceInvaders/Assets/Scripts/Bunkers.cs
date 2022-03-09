@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Bunkers : MonoBehaviour
 {
-
     private int bunkerHealth = 100;
-
-    void OnCollisionEnter()
+    private Rigidbody2D bunker;
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        bunkerHealth -= 10;
-        if (bunkerHealth <= 10)
+        Destroy(other.gameObject); // destroy bullet
+        bunkerHealth = bunkerHealth - 20;
+        if (bunkerHealth == 20)
         {
-            Destroy(GetComponent<Rigidbody>());
+            Destroy(bunker.gameObject);
         }
+    }
+    private void Start()
+    {
+        bunker = GetComponent<Rigidbody2D>();
     }
 }
