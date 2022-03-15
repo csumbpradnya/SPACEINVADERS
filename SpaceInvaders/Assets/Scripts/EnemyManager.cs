@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
@@ -25,6 +26,9 @@ public class EnemyManager : MonoBehaviour
     public Transform enemyRoot;
     private int totalNumberOfEnemies;
     
+    public AudioSource audioSrc;
+    public AudioClip shootAudio;
+    
     private int enemyAlive;
     private Vector3 marchDirection = Vector3.right;
     private float currentShotInterval;
@@ -35,7 +39,8 @@ public class EnemyManager : MonoBehaviour
     private float enemyAliveinPercent;
     
 
-    
+
+
     public GameObject bulletPrefab;
     public Transform shootOffsetTransform;
     private void Start()
@@ -48,13 +53,19 @@ public class EnemyManager : MonoBehaviour
         SpawnEnemyRow(enemy3Prefab, enemyStartHeight - heightPerEnemy * 2f);
         currentShotInterval = Random.Range(minSheetInterval, maxShootInterval);
 
+        audioSrc = GetComponent<AudioSource>();
+
         foreach (Transform enemyTransform in enemyRoot)
         {
             totalNumberOfEnemies += 1;
         }
         
+        
+        
         // https://www.youtube.com/watch?v=qWDQgmdUzWI
         InvokeRepeating(nameof(enemyAttack), currentShotInterval, currentShotInterval);
+
+        
     }
 
     private void Update()
@@ -79,6 +90,11 @@ public class EnemyManager : MonoBehaviour
                     marchDirection *= -1f;
                     break;
                 }
+            }
+
+            if (enemyAlive == 0)
+            {
+                SceneManager.LoadScene("Credits");  
             }
         }
         enemyAliveinPercent = (float) enemyAlive / totalNumberOfEnemies;
@@ -111,6 +127,9 @@ public class EnemyManager : MonoBehaviour
         {
             if (Random.value < (1.0f / (float) enemyAliveinPercent))
             {
+                enemyTransform.GetComponent<Animator>().SetTrigger("Shoot");
+                audioSrc.clip = shootAudio;
+                audioSrc.Play();
                 GameObject shot = Instantiate(bulletPrefab, enemyTransform.position, Quaternion.identity);
                 shot.tag = "enemy";
                 break;

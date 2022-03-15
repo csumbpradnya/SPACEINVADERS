@@ -26,8 +26,7 @@ public class Bullet : MonoBehaviour
         {
             body.velocity = Vector2.down * 2f;
         }
-
-        Debug.Log("Wwweeeeee");
+        
     }
 
    

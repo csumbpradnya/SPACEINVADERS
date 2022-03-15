@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
@@ -8,10 +12,15 @@ public class Player : MonoBehaviour
 
     private Animator playerAnimator;
     private Rigidbody2D body;
+    
+    public AudioSource audioSrc;
+    public AudioClip shootAudio;
 
+    private int playerHealth = 20;
     //-----------------------------------------------------------------------------
     void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
         playerAnimator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
     }
@@ -29,13 +38,37 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // todo - trigger a "shoot" on the animator
+            audioSrc.clip = shootAudio;
+            audioSrc.Play();
             playerAnimator.SetTrigger("Shoot");
             GameObject bullet = Instantiate(bulletPrefab, shootOffsetTransform.position, Quaternion.identity);
             bullet.tag = "friendly";
-            Debug.Log("Bang!");
             Destroy(bullet, 6f);
         }
         
         
     }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        Destroy(col.gameObject); // destroy bullet
+        if (col.gameObject.tag == "enemy")
+        {
+            playerHealth = playerHealth - 10;
+            if (playerHealth <= 10)
+            {
+                StartCoroutine(Destroytimer());
+                SceneManager.LoadScene("Credits");
+            }
+        }
+    }
+    
+    IEnumerator Destroytimer()
+    {
+        playerAnimator.SetTrigger("DestroyT");
+        yield return new WaitForSeconds(4);
+        Destroy(body.gameObject);
+    }
+    
+    
 }

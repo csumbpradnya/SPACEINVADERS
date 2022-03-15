@@ -1,16 +1,22 @@
 ﻿using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
-    private int enemyHealth = 100;
+    private int enemyHealth = 40;
     private Rigidbody2D enemy;
     private ScoreManager scoreManager;
     
+    public AudioSource audioSrc;
+    public AudioClip destroyAudio;
     private void Start()
     {
         enemy = GetComponent<Rigidbody2D>(); 
         scoreManager = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
     //-----------------------------------------------------------------------------
@@ -42,10 +48,20 @@ public class Enemy : MonoBehaviour
                 {
                     scoreManager.scoreEnemy4();
                 }
+                
                 scoreManager.HighScore();
-                Destroy(enemy.gameObject);
+                
+                audioSrc.clip = destroyAudio;
+                audioSrc.Play();
+                StartCoroutine(Destroytimer());
             }
-            Debug.Log("Ouch!");
         }
+    }
+
+    IEnumerator Destroytimer()
+    {
+        enemy.GetComponent<Animator>().SetTrigger("DestroyT");
+        yield return new WaitForSeconds(4);
+        Destroy(enemy.gameObject);
     }
 }
